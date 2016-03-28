@@ -150,4 +150,37 @@ public class ManageFeed {
 		}
 		return animalFeed;
 	}
+	
+public Status getAnimalAverageFeedPerDayByZooName() {
+		
+		// TODO Auto-generated method stub
+		Status status = new Status();
+		try {
+			double averagecount = 0.0;
+			Map<String, Map<String, List<Feed>>> feedMap= getFeedDetails();
+			for(Map.Entry<String, Map<String, List<Feed>>> feedsMap : feedMap.entrySet()){
+				Map <String, List<Feed>> animalInZoo = feedsMap.getValue();
+				for(Map.Entry<String, List<Feed>> animals : animalInZoo.entrySet()){
+					ArrayList<Integer> days= new ArrayList<Integer>();
+					days.add(animals.getValue().get(0).getDay());
+					int animalFeedCount = 0;
+					for(Feed animal : animals.getValue()){
+						animalFeedCount++;
+						if(!days.contains(animal.getDay()))
+							days.add(animal.getDay());
+					}
+					averagecount = (double)animalFeedCount/days.size();
+					System.out.println("Zoo Name: "+animals.getValue().get(0).getZooName()+"; Animal Name: "+animals.getKey()+"; Average Count: "+averagecount);
+				}				
+			}
+			status.setStatus(true);
+			status.setMessage("Success!");
+		} catch (Exception e) {
+			status.setStatus(false);
+			status.setMessage(e.getMessage());
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+		return status;
+	}
 }

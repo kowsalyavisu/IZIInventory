@@ -23,7 +23,7 @@ public class MainIZIInventory {
 		int option = 0;
 		try {
 			do{
-				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Feed Information\n3. Add Inventory feed in stock\n4. Individual Animal fed every day in average\n5. Average number of times animals are fed on a day\n6. Waste in each Zoo\n7. Which species of animal fed below/ above average");
+				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Feed Information\n3. Add Inventory feed in stock\n4. Individual Animal fed every day in average\n5. Average number of times animals are fed on a day\n6. Waste in each Zoo\n7. Which species of animal fed below/ above average\n0. Exit");
 				option = input.nextInt();
 				if(option == 1){
 					System.out.println("Enter Zoo Name");
@@ -40,8 +40,16 @@ public class MainIZIInventory {
 					getFeedInformation();
 				}
 				else if(option == 3){
-					
-				
+					System.out.println("Enter Zoo Name");
+					String zooName = input.next();
+					System.out.println("Enter the invetory in stok");
+					double inventory = input.nextDouble();
+					Inventory inventoryObj = new Inventory();
+					inventoryObj.setZooName(zooName);
+					inventoryObj.setInventory(inventory);
+					ManageInventory manage = new ManageInventory();
+					Status status = manage.SetInventoryInStock(inventoryObj);
+					System.out.println(status.getMessage());				
 				}
 				else if(option ==4){
 					ManageFeed manage = new ManageFeed();
@@ -51,15 +59,22 @@ public class MainIZIInventory {
 					}
 				}
 				else if(option == 5){
-					
+					ManageFeed manage = new ManageFeed();
+					Status status = manage.getAnimalAverageFeedPerDayByZooName();
+					if(!status.isStatus()){
+						System.out.println(status.getMessage());
+					}
 				}
 				else if(option ==6){
-					
+					ManageInventory manage = new ManageInventory();
+					manage.getWastePerZoo();
 				}
 				else if(option == 7){
 					
 				}
 				else{
+					if(option ==0)
+						break;
 					System.out.println("Enter correct option");
 				}
 				
@@ -67,12 +82,12 @@ public class MainIZIInventory {
 			}while(option != 0);
 			//input.close();
 		} catch (InputMismatchException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Enter numbers 1 to 6");
 			getUserInput();
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("System Error Occured ..Enter again");
 			getUserInput();
 		}
@@ -116,12 +131,12 @@ public class MainIZIInventory {
 				System.out.println(status.getMessage());
 			//input.close();
 		} catch (InputMismatchException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Error in entering day or quantity");
 			getFeedInformation();
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("System Errored occured. Enter information again");
 			getFeedInformation();
 		}
