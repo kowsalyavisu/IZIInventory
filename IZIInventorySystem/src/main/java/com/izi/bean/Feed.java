@@ -6,7 +6,6 @@ public class Feed {
 	private String feedTime;
 	private int day;
 	private String zooName;
-	private String speciesName;
 	private String animalName;
 	public double getFeedQuantity() {
 		return feedQuantity;
@@ -31,12 +30,6 @@ public class Feed {
 	}
 	public void setZooName(String zooName) {
 		this.zooName = zooName;
-	}
-	public String getSpeciesName() {
-		return speciesName;
-	}
-	public void setSpeciesName(String speciesName) {
-		this.speciesName = speciesName;
 	}
 	public String getAnimalName() {
 		return animalName;
