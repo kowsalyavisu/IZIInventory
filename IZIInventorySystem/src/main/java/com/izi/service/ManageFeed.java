@@ -38,7 +38,7 @@ public class ManageFeed {
 					sb.append(line+"\n");
 		            String[] inventoryDetails = line.split(",");
 		            if(inventoryDetails[0].equals(feed.getZooName())){
-		            	running = Double.parseDouble(inventoryDetails[2]) + feed.getFeedQuantity();
+		            	running = Double.parseDouble(inventoryDetails[2]) + feed.getFeedQuantity();// the running inventory is increased after every feed
 		            	newLine = inventoryDetails[0]+","+inventoryDetails[1]+","+running+","+inventoryDetails[3];
 		            	oldLine = line;
 		            	if(running > (Double.parseDouble(inventoryDetails[1])*0.95)){
@@ -49,7 +49,7 @@ public class ManageFeed {
 		            }
 				}
 				
-				if(foundInventory && newLine != null){
+				if(foundInventory && newLine != null){//If the inventory is found then the feed details are added and the inventory is updated
 					FileWriter InventoryWritter = new FileWriter(inventoryFile.getName());
 					BufferedWriter bufferedWritter = new BufferedWriter(InventoryWritter);
 					bufferedWritter.write(sb.toString().replace(oldLine,  newLine));
@@ -78,4 +78,76 @@ public class ManageFeed {
 		return status;
 	}
 	
+	public Status getAnimalAverageFeedByZooName() {
+		// TODO Auto-generated method stub
+		Map<String, Map<String, List<Feed>>> feedMap= getFeedDetails();
+		Status status = new Status();
+		try {
+			for(Map.Entry<String, Map<String, List<Feed>>> feedsMap : feedMap.entrySet()){
+				Map <String, List<Feed>> animalInZoo = feedsMap.getValue();
+				for(Map.Entry<String, List<Feed>> animals : animalInZoo.entrySet()){
+					ArrayList<Integer> days= new ArrayList<Integer>();
+					days.add(animals.getValue().get(0).getDay());
+					double feedQuantity = 0.0;
+					for(Feed animal : animals.getValue()){
+						feedQuantity += animal.getFeedQuantity();
+						if(!days.contains(animal.getDay()))
+							days.add(animal.getDay());
+					}
+					feedQuantity = feedQuantity/days.size();
+					System.out.println("Zoo Name: "+animals.getValue().get(0).getZooName()+"; Animal Name: "+animals.getKey()+"; Average Feed: "+feedQuantity);
+				}
+			}
+			status.setStatus(true);
+			status.setMessage("success!!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			status.setStatus(false);
+			status.setMessage(e.getMessage());
+			//e.printStackTrace();
+		}
+		return status;
+	}
+	private Map getFeedDetails() {
+		// TODO Auto-generated method stub
+		 Map<String, Map<String, List<Feed>>> animalFeed = new HashMap<String, Map<String, List<Feed>>>();
+			
+		try {
+			FileReader fileReader = new FileReader("feed.txt");
+			String line = null;
+	        BufferedReader bufferedReader =  new BufferedReader(fileReader);
+	       while((line = bufferedReader.readLine()) != null) {
+	            String[] feedDetails = line.split(",");
+	            Feed feed = new Feed();
+	            feed.setZooName(feedDetails[0]);
+	            feed.setAnimalName(feedDetails[1]);
+	            feed.setDay(Integer.parseInt(feedDetails[2]));
+	            feed.setFeedTime(feedDetails[3]);
+	            feed.setFeedQuantity(Double.parseDouble(feedDetails[4]));
+	            if(!animalFeed.containsKey(feed.getZooName())){
+					animalFeed.put(feed.getZooName(), null);
+				}
+				Map<String, List<Feed>> animalMap = animalFeed.get(feed.getZooName());
+				if(animalMap == null){
+					animalMap = new HashMap<String, List<Feed>>();
+					animalMap.put(feed.getAnimalName(), new ArrayList<Feed>());
+				}
+				List animalList = animalMap.get(feed.getAnimalName());
+				if(animalList == null){
+					animalList = new ArrayList<Feed>();
+				}
+				//System.out.println("animal"+animalList);
+				animalList.add(feed);
+				animalMap.put(feed.getAnimalName(), animalList);
+				animalFeed.put(feed.getZooName(), animalMap);
+				
+	        }
+	       bufferedReader.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			System.out.println("System Error occured");
+		}
+		return animalFeed;
+	}
 }

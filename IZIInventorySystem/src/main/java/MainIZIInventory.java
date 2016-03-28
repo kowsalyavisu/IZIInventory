@@ -23,7 +23,7 @@ public class MainIZIInventory {
 		int option = 0;
 		try {
 			do{
-				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Feed Information");
+				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Feed Information\n3. Add Inventory feed in stock\n4. Individual Animal fed every day in average\n5. Average number of times animals are fed on a day\n6. Waste in each Zoo\n7. Which species of animal fed below/ above average");
 				option = input.nextInt();
 				if(option == 1){
 					System.out.println("Enter Zoo Name");
@@ -39,7 +39,26 @@ public class MainIZIInventory {
 				else if(option == 2){
 					getFeedInformation();
 				}
+				else if(option == 3){
+					
 				
+				}
+				else if(option ==4){
+					ManageFeed manage = new ManageFeed();
+					Status status = manage.getAnimalAverageFeedByZooName();
+					if(!status.isStatus()){
+						System.out.println(status.getMessage());
+					}
+				}
+				else if(option == 5){
+					
+				}
+				else if(option ==6){
+					
+				}
+				else if(option == 7){
+					
+				}
 				else{
 					System.out.println("Enter correct option");
 				}
