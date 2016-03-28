@@ -24,7 +24,7 @@ public class MainIZIInventory {
 		int option = 0;
 		try {
 			do{
-				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Feed Information\n3. Add Inventory feed in stock\n4. Individual Animal fed every day in average\n5. Average number of times animals are fed on a day\n6. Waste in each Zoo\n7. Which species of animal fed below/ above average\n0. Exit");
+				System.out.println("Enter Your Choice !!!\n1. Add Inventory\n2. Add Animal Feed Information\n3. Add Inventory feed in stock\n4. Individual Animal fed every day in average\n5. Average number of times animals are fed on a day\n6. Waste in each Zoo\n7. Which species of animal fed below/ above average\n0. Exit");
 				option = input.nextInt();
 				if(option == 1){
 					System.out.println("Enter Zoo Name");
@@ -43,7 +43,7 @@ public class MainIZIInventory {
 				else if(option == 3){
 					System.out.println("Enter Zoo Name");
 					String zooName = input.next();
-					System.out.println("Enter the invetory in stok");
+					System.out.println("Enter the invetory in stock");
 					double inventory = input.nextDouble();
 					Inventory inventoryObj = new Inventory();
 					inventoryObj.setZooName(zooName);
