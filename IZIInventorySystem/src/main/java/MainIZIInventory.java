@@ -20,6 +20,7 @@ public class MainIZIInventory {
 	
 	private static void getUserInput(){
 		Scanner input = new Scanner(System.in);
+		input.useDelimiter(System.getProperty("line.separator"));
 		int option = 0;
 		try {
 			do{
@@ -70,7 +71,8 @@ public class MainIZIInventory {
 					manage.getWastePerZoo();
 				}
 				else if(option == 7){
-					
+					ManageFeed manage = new ManageFeed();
+					manage.getAnimalFedAverage();
 				}
 				else{
 					if(option ==0)
@@ -96,25 +98,16 @@ public class MainIZIInventory {
 		try {
 			System.out.println("Enter the Zoo Name:");
 			Scanner input = new Scanner(System.in);
-			String zooName = "";
-			String animalName = "";
-			int day =0;
-			String time = "";
-			double quantity = 0.0;
-			if(input.hasNext())
-				zooName = input.next();			
+			input.useDelimiter(System.getProperty("line.separator"));
+			String zooName = input.next();			
 			System.out.println("Enter the Animal Name:");
-			if(input.hasNext())
-				animalName = input.next();
+			String animalName = input.next();
 			System.out.println("Enter the Day Number:");
-			if(input.hasNext())
-				day = input.nextInt();
+			int day = input.nextInt();
 			System.out.println("Enter the Time(00:00 - 24:00):");
-			if(input.hasNext())
-				time = input.next();	
+			String time = input.next();	
 			System.out.println("Enter the quantity in lbs");
-			if(input.hasNext())
-				quantity = input.nextDouble();
+			double quantity = input.nextDouble();
 			Feed feed = new Feed();
 			feed.setZooName(zooName);
 			feed.setAnimalName(animalName);

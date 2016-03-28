@@ -183,4 +183,72 @@ public Status getAnimalAverageFeedPerDayByZooName() {
 		}
 		return status;
 	}
+
+public void getAnimalFedAverage() {
+	// TODO Auto-generated method stub
+	try {
+		FileReader fileReader = new FileReader("feed.txt");
+		String line = null;
+		double feedCount = 0.0;
+		double feedAverage = 0.0;
+		double individualAver = 0.0;
+		BufferedReader bufferedReader =  new BufferedReader(fileReader);
+		Map<String, Map<String, Double>> animalMap = new HashMap<String, Map<String, Double>>();
+		while((line = bufferedReader.readLine()) != null) {
+		    String[] feedDetails = line.split(",");
+		    double feedQuantity = Double.parseDouble(feedDetails[4]);
+		    String zooName = feedDetails[0];
+		    Map zooMap = animalMap.get(feedDetails[1]);
+		    if(zooMap == null){
+		    	zooMap = new HashMap<String, Double>();
+		    	zooMap.put(zooName, feedQuantity);
+		    }
+		    else{
+		    	Double feed = (Double) zooMap.get(zooName);
+		    	if(feed == null){
+		    		feed = feedQuantity;
+		    	}
+		    	else
+		    		feed = feed + feedQuantity;
+		    	zooMap.put(zooName, feed);
+		    }
+		    animalMap.put(feedDetails[1], zooMap);
+		    //System.out.println(zooMap);
+		
+		}
+		bufferedReader.close();
+		
+		for(Map.Entry<String, Map<String, Double>> animalsMap : animalMap.entrySet()){
+			Map<String, Double> zooMap = animalsMap.getValue();
+			for(Map.Entry<String, Double> zoosMap : zooMap.entrySet()){
+				feedCount += (Double)zoosMap.getValue();
+			}
+			feedAverage = feedCount/zooMap.size();
+			System.out.println(feedAverage);
+			for(Map.Entry<String, Double> zoosMap : zooMap.entrySet()){
+				feedCount = (Double)zoosMap.getValue();
+				individualAver = (feedCount/feedAverage)*100 - 100;
+				StringBuffer sb = new StringBuffer();
+				sb.append("Animal "+animalsMap.getKey()+" in Zoo "+zoosMap.getKey()+" is "+individualAver+"%");
+				if(individualAver < 0)
+					sb.append(" (below average)");
+				else if (individualAver  > 0)
+					sb.append(" (above average)");
+				sb.append(" of total average by animal species");
+				System.out.println(sb.toString());
+			}
+			feedCount = 0.0;
+			feedAverage = 0.0;
+		}
+	} catch (NumberFormatException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 }
