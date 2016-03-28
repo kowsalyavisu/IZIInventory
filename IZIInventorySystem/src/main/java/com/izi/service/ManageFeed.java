@@ -17,7 +17,7 @@ import com.izi.bean.*;
 public class ManageFeed {
 	
 	
-	public Status saveFeedDetails(Feed feed) {
+	public Status saveFeedDetails(Feed feed) {//this method will get the feed information and store it in file with ',' as separator and also update the running inventory
 		// TODO Auto-generated method stub
 		Status status = new Status();
 		try {
@@ -78,7 +78,7 @@ public class ManageFeed {
 		return status;
 	}
 	
-	public Status getAnimalAverageFeedByZooName() {
+	public Status getAnimalAverageFeed() {//to calculate the average feed per day
 		// TODO Auto-generated method stub
 		Map<String, Map<String, List<Feed>>> feedMap= getFeedDetails();
 		Status status = new Status();
@@ -108,7 +108,7 @@ public class ManageFeed {
 		}
 		return status;
 	}
-	private Map getFeedDetails() {
+	private Map getFeedDetails() {//read the file and put the details in a map. The map key is zoo name and value is map of animals with animal name as key and list of feed objects as value
 		// TODO Auto-generated method stub
 		 Map<String, Map<String, List<Feed>>> animalFeed = new HashMap<String, Map<String, List<Feed>>>();
 			
@@ -151,7 +151,7 @@ public class ManageFeed {
 		return animalFeed;
 	}
 	
-public Status getAnimalAverageFeedPerDayByZooName() {
+public Status getAnimalAverageFeedPerDay() {// to calculate the number of timea animals are fed
 		
 		// TODO Auto-generated method stub
 		Status status = new Status();

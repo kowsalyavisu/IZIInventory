@@ -54,14 +54,14 @@ public class MainIZIInventory {
 				}
 				else if(option ==4){
 					ManageFeed manage = new ManageFeed();
-					Status status = manage.getAnimalAverageFeedByZooName();
+					Status status = manage.getAnimalAverageFeed();
 					if(!status.isStatus()){
 						System.out.println(status.getMessage());
 					}
 				}
 				else if(option == 5){
 					ManageFeed manage = new ManageFeed();
-					Status status = manage.getAnimalAverageFeedPerDayByZooName();
+					Status status = manage.getAnimalAverageFeedPerDay();
 					if(!status.isStatus()){
 						System.out.println(status.getMessage());
 					}
